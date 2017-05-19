@@ -24,6 +24,7 @@
 		04FEE5781ECDA72400B202A6 /* BHPagerViewTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FEE5771ECDA72400B202A6 /* BHPagerViewTransformer.swift */; };
 		04FEE57A1ECDA8D900B202A6 /* BHPagerViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FEE5791ECDA8D900B202A6 /* BHPagerViewLayout.swift */; };
 		04FEE57C1ECDA90300B202A6 /* BHPagerCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FEE57B1ECDA90300B202A6 /* BHPagerCollectionView.swift */; };
+		04FEE57F1ECED3D500B202A6 /* BHPagerViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FEE57E1ECED3D500B202A6 /* BHPagerViewLayoutAttributes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		04FEE5771ECDA72400B202A6 /* BHPagerViewTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BHPagerViewTransformer.swift; sourceTree = "<group>"; };
 		04FEE5791ECDA8D900B202A6 /* BHPagerViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BHPagerViewLayout.swift; sourceTree = "<group>"; };
 		04FEE57B1ECDA90300B202A6 /* BHPagerCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BHPagerCollectionView.swift; sourceTree = "<group>"; };
+		04FEE57E1ECED3D500B202A6 /* BHPagerViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BHPagerViewLayoutAttributes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				04FEE5771ECDA72400B202A6 /* BHPagerViewTransformer.swift */,
 				04FEE5791ECDA8D900B202A6 /* BHPagerViewLayout.swift */,
 				04FEE57B1ECDA90300B202A6 /* BHPagerCollectionView.swift */,
+				04FEE57E1ECED3D500B202A6 /* BHPagerViewLayoutAttributes.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -194,6 +197,7 @@
 				04FEE5781ECDA72400B202A6 /* BHPagerViewTransformer.swift in Sources */,
 				04FEE57A1ECDA8D900B202A6 /* BHPagerViewLayout.swift in Sources */,
 				04FEE5761ECDA66700B202A6 /* BHPagerVIew.swift in Sources */,
+				04FEE57F1ECED3D500B202A6 /* BHPagerViewLayoutAttributes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
