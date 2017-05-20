@@ -59,6 +59,9 @@ class BHPagerViewLayout: UICollectionViewLayout {
         //Set actual item size (from @insp)
         self.actualItemSize = {
             var size = pagerView.itemSize
+            if size == .zero {
+                size = collectionView.frame.size
+            }
             return size
         }()
         
@@ -69,15 +72,17 @@ class BHPagerViewLayout: UICollectionViewLayout {
         self.scrollDirection = pagerView.scrollDirection
         self.leadingSpacing = self.scrollDirection == .horizontal ? (collectionView.frame.width - self.actualItemSize.width) * 0.5 : (collectionView.frame.height-self.actualItemSize.height)*0.5
         
+         self.itemSpacing = (self.scrollDirection == .horizontal ? self.actualItemSize.width : self.actualItemSize.height) + self.actualInteritemSpacing
+        
         self.contentSize = {
            let numberOfItems = self.numberOfItems*self.numberOfSections
             switch self.scrollDirection {
             case .horizontal:
                 var contentSizeWidth: CGFloat = self.leadingSpacing * 2 // Leading & trailing spacing
-
                 contentSizeWidth += CGFloat(numberOfItems-1)*self.actualInteritemSpacing //Interitem spacing
-                contentSizeWidth += CGFloat(numberOfItems)*self.actualItemSize.width //Item sizes
+                contentSizeWidth += CGFloat(numberOfItems)*self.actualItemSize.width //Item size
                 let contentSize = CGSize(width: contentSizeWidth, height: collectionView.frame.height)
+                print("content size \(contentSize)")
                 return contentSize
             case .vertical:
                 var contentSizeHeight: CGFloat = self.leadingSpacing*2 // Leading & trailing spacing
@@ -91,6 +96,39 @@ class BHPagerViewLayout: UICollectionViewLayout {
     
     override open var collectionViewContentSize: CGSize {
         return self.contentSize
+    }
+    
+    override open func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        return true
+    }
+    
+    override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        
+       
+        var layoutAttributes = [UICollectionViewLayoutAttributes]()
+        guard self.numberOfItems > 0 else {
+            return layoutAttributes
+        }
+        /*guard self.itemSpacing > 0, !rect.isEmpty else {
+
+            return layoutAttributes
+        }*/
+        //Visible rect??
+        let rect = rect.intersection(CGRect(origin: .zero, size: self.contentSize))
+
+        guard !rect.isEmpty else {
+            return layoutAttributes
+        }
+        print("rect.minX\(rect.minX)")
+        print("self.leadingSpacing\(self.leadingSpacing)")
+        print("self.itemSpacing\(self.itemSpacing)")
+        
+        // Calculate start position and index of certain rects
+        let numberOfItemsBefore = self.scrollDirection == .horizontal ? max(Int((rect.minX-self.leadingSpacing)/self.itemSpacing),0) : max(Int((rect.minY-self.leadingSpacing)/self.itemSpacing),0)
+        
+
+
+        return layoutAttributes
     }
     
     //MARK: Internal function

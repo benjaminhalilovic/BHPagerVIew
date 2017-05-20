@@ -25,6 +25,7 @@
 		04FEE57A1ECDA8D900B202A6 /* BHPagerViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FEE5791ECDA8D900B202A6 /* BHPagerViewLayout.swift */; };
 		04FEE57C1ECDA90300B202A6 /* BHPagerCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FEE57B1ECDA90300B202A6 /* BHPagerCollectionView.swift */; };
 		04FEE57F1ECED3D500B202A6 /* BHPagerViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FEE57E1ECED3D500B202A6 /* BHPagerViewLayoutAttributes.swift */; };
+		04FEE5811ED0047300B202A6 /* testvcViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FEE5801ED0047300B202A6 /* testvcViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		04FEE5791ECDA8D900B202A6 /* BHPagerViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BHPagerViewLayout.swift; sourceTree = "<group>"; };
 		04FEE57B1ECDA90300B202A6 /* BHPagerCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BHPagerCollectionView.swift; sourceTree = "<group>"; };
 		04FEE57E1ECED3D500B202A6 /* BHPagerViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BHPagerViewLayoutAttributes.swift; sourceTree = "<group>"; };
+		04FEE5801ED0047300B202A6 /* testvcViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testvcViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				04FEE5701ECD99F200B202A6 /* Classes */,
 				04FEE5501ECD989900B202A6 /* AppDelegate.swift */,
 				04FEE5521ECD989900B202A6 /* ViewController.swift */,
+				04FEE5801ED0047300B202A6 /* testvcViewController.swift */,
 				04FEE5541ECD989900B202A6 /* Main.storyboard */,
 				04FEE5571ECD989900B202A6 /* Assets.xcassets */,
 				04FEE5621ECD98E100B202A6 /* 1.jpg */,
@@ -102,11 +105,11 @@
 			isa = PBXGroup;
 			children = (
 				04FEE5751ECDA66700B202A6 /* BHPagerVIew.swift */,
-				04FEE5731ECD9DF000B202A6 /* BHPagerViewCell.swift */,
-				04FEE5771ECDA72400B202A6 /* BHPagerViewTransformer.swift */,
-				04FEE5791ECDA8D900B202A6 /* BHPagerViewLayout.swift */,
 				04FEE57B1ECDA90300B202A6 /* BHPagerCollectionView.swift */,
+				04FEE5791ECDA8D900B202A6 /* BHPagerViewLayout.swift */,
+				04FEE5731ECD9DF000B202A6 /* BHPagerViewCell.swift */,
 				04FEE57E1ECED3D500B202A6 /* BHPagerViewLayoutAttributes.swift */,
+				04FEE5771ECDA72400B202A6 /* BHPagerViewTransformer.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 				04FEE57A1ECDA8D900B202A6 /* BHPagerViewLayout.swift in Sources */,
 				04FEE5761ECDA66700B202A6 /* BHPagerVIew.swift in Sources */,
 				04FEE57F1ECED3D500B202A6 /* BHPagerViewLayoutAttributes.swift in Sources */,
+				04FEE5811ED0047300B202A6 /* testvcViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

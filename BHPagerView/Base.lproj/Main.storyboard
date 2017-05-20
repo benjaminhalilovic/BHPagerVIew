@@ -10,6 +10,53 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Testvc View Controller-->
+        <scene sceneID="RHJ-Ga-TI1">
+            <objects>
+                <viewController id="txb-0u-4cM" customClass="testvcViewController" customModule="BHPagerView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sZe-3L-yU3"/>
+                        <viewControllerLayoutGuide type="bottom" id="2Ef-vx-xCO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UhN-a9-2r4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bg3-OA-lnU">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="HyQ-PV-Awq">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HyQ-PV-Awq" id="2nz-TX-1TQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="txb-0u-4cM" id="qpL-Ym-HGJ"/>
+                                    <outlet property="delegate" destination="txb-0u-4cM" id="yEt-92-CmP"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2Ef-vx-xCO" firstAttribute="top" secondItem="bg3-OA-lnU" secondAttribute="bottom" id="0Rw-Ro-1My"/>
+                            <constraint firstItem="bg3-OA-lnU" firstAttribute="top" secondItem="UhN-a9-2r4" secondAttribute="top" id="Ags-MQ-A03"/>
+                            <constraint firstItem="bg3-OA-lnU" firstAttribute="leading" secondItem="UhN-a9-2r4" secondAttribute="leading" id="buV-Jp-oQ8"/>
+                            <constraint firstAttribute="trailing" secondItem="bg3-OA-lnU" secondAttribute="trailing" id="c4i-H3-5t6"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="bg3-OA-lnU" id="Nne-dX-gwO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="316-an-d2t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="487.19999999999999" y="-555.47226386806597"/>
+        </scene>
         <!--Data Source-->
         <scene sceneID="tne-QT-ifu">
             <objects>
