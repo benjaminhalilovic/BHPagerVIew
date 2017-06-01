@@ -9,11 +9,12 @@
 import UIKit
 
 open class BHPagerViewCell: UICollectionViewCell {
-    /// Returns the label used for the main textual content of the pager view cell.
+
     open var textLabel: UILabel? {
         if let _ = _textLabel {
             return _textLabel
         }
+        
         let view = UIView(frame: .zero)
         view.isUserInteractionEnabled = false
         view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
@@ -23,8 +24,6 @@ open class BHPagerViewCell: UICollectionViewCell {
         textLabel.font = UIFont.preferredFont(forTextStyle: .body)
         self.contentView.addSubview(view)
         view.addSubview(textLabel)
-        
-        textLabel.addObserver(self, forKeyPath: "font", options: [.old,.new], context: kvoContext)
         
         _textLabel = textLabel
         return textLabel
@@ -81,6 +80,7 @@ open class BHPagerViewCell: UICollectionViewCell {
             return super.isSelected
         }
     }
+
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -99,12 +99,6 @@ open class BHPagerViewCell: UICollectionViewCell {
         self.contentView.layer.shadowRadius = 5
         self.contentView.layer.shadowOpacity = 0.75
         self.contentView.layer.shadowOffset = .zero
-    }
-    
-    deinit {
-        if let textLabel = _textLabel {
-            textLabel.removeObserver(self, forKeyPath: "font", context: kvoContext)
-        }
     }
     
     override open func layoutSubviews() {
@@ -131,15 +125,8 @@ open class BHPagerViewCell: UICollectionViewCell {
         if let selectedForegroundView = _selectedForegroundView {
             selectedForegroundView.frame = self.contentView.bounds
         }
+
     }
     
-    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if context == kvoContext {
-            if keyPath == "font" {
-                self.setNeedsLayout()
-            }
-        } else {
-            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-        }
-    }
+    
 }

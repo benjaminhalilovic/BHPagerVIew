@@ -10,21 +10,6 @@ import UIKit
 
 class BHPagerCollectionView: UICollectionView {
 
-    fileprivate var pagerView: BHPagerView? {
-        return self.superview?.superview as? BHPagerView
-    }
-    
-    #if !os(tvOS)
-    override var scrollsToTop: Bool {
-        set {
-            super.scrollsToTop = false
-        }
-        get {
-            return false
-        }
-    }
-    #endif
-    
     override var contentInset: UIEdgeInsets {
         set {
             super.contentInset = .zero
@@ -58,7 +43,6 @@ class BHPagerCollectionView: UICollectionView {
             self.isPagingEnabled = false
         #endif
     }
-
 
 
 }

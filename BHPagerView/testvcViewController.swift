@@ -8,39 +8,37 @@
 
 import UIKit
 
-class testvcViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class testvcViewController: UIViewController {
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tap: UIButton!
+    var currentAnimation = 0
+    var imageView : UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        imageView = UIImageView(image: UIImage(named: "1"))
+        imageView.center = CGPoint(x: view.center.x, y: view.center.y)
+        view.addSubview(imageView)
+    }
+    
+    
+    @IBAction func button_tapped(_ sender: Any) {
+        tap.isHidden = true
+        UIView.animate(withDuration: 1, animations: {
+            print("Animation in progress...")
+            switch self.currentAnimation {
+            case 0:
+                self.imageView.transform = CGAffineTransform(scaleX: 2, y: 2)
+                break
+            default:
+                break
+            }
+        }, completion:{
+            (finished: Bool) in
+            self.tap.isHidden = false
+        })
+        currentAnimation += 1
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    fileprivate let imageNames = ["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg","1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg", "1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg", "1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg", "1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg" ]
-    
-
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return imageNames.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        cell.textLabel?.text = imageNames[indexPath.row]
-        return cell
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("tableView.frame\(tableView.frame)")
-        print("tableView.bounds\(tableView.bounds)")
-        print("tableView.contentSize\(tableView.contentSize)")
-        print("tableView.contentOffset\(tableView.contentOffset)")
-    }
-    
 }

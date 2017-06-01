@@ -24,6 +24,52 @@ public protocol BHPagerDataSource: NSObjectProtocol {
 @objc
 public protocol BHPagerDelegate: NSObjectProtocol {
     
+    /// Asks the delegate if the item should be highlighted during tracking.
+    @objc(pagerView:shouldHighlightItemAtIndex:)
+    optional func pagerView(_ pagerView: BHPagerView, shouldHighlightItemAt index: Int) -> Bool
+    
+    /// Tells the delegate that the item at the specified index was highlighted.
+    @objc(pagerView:didHighlightItemAtIndex:)
+    optional func pagerView(_ pagerView: BHPagerView, didHighlightItemAt index: Int)
+    
+    /// Asks the delegate if the specified item should be selected.
+    @objc(pagerView:shouldSelectItemAtIndex:)
+    optional func pagerView(_ pagerView: BHPagerView, shouldSelectItemAt index: Int) -> Bool
+    
+    /// Tells the delegate that the item at the specified index was selected.
+    @objc(pagerView:didSelectItemAtIndex:)
+    optional func pagerView(_ pagerView: BHPagerView, didSelectItemAt index: Int)
+    
+    /// Tells the delegate that the specified cell is about to be displayed in the pager view.
+    @objc(pagerView:willDisplayCell:forItemAtIndex:)
+    optional func pagerView(_ pagerView: BHPagerView, willDisplay cell: BHPagerViewCell, forItemAt index: Int)
+    
+    /// Tells the delegate that the specified cell was removed from the pager view.
+    @objc(pagerView:didEndDisplayingCell:forItemAtIndex:)
+    optional func pagerView(_ pagerView: BHPagerView, didEndDisplaying cell: BHPagerViewCell, forItemAt index: Int)
+    
+    /// Tells the delegate when the pager view is about to start scrolling the content.
+    @objc(pagerViewWillBeginDragging:)
+    optional func pagerViewWillBeginDragging(_ pagerView: BHPagerView)
+    
+    /// Tells the delegate when the user finishes scrolling the content.
+    @objc(pagerViewWillEndDragging:targetIndex:)
+    optional func pagerViewWillEndDragging(_ pagerView: BHPagerView, targetIndex: Int)
+    
+    /// Tells the delegate when the user scrolls the content view within the receiver.
+    @objc(pagerViewDidScroll:)
+    optional func pagerViewDidScroll(_ pagerView: BHPagerView)
+    
+    /// Tells the delegate when a scrolling animation in the pager view concludes.
+    @objc(pagerViewDidEndScrollAnimation:)
+    optional func pagerViewDidEndScrollAnimation(_ pagerView: BHPagerView)
+    
+    /// Tells the delegate that the pager view has ended decelerating the scrolling movement.
+    @objc(pagerViewDidEndDecelerating:)
+    optional func pagerViewDidEndDecelerating(_ pagerView: BHPagerView)
+    
+
+
 }
 
 @objc
@@ -55,7 +101,7 @@ open class BHPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
     @IBInspectable
     open var automaticSlidingInterval: CGFloat = 0.0 {
         didSet {
-            
+         
         }
     }
     
@@ -71,7 +117,7 @@ open class BHPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
     @IBInspectable
     open var itemSize: CGSize = .zero {
         didSet {
-            
+            self.collectionViewLayout.forceInvalidate()
         }
     }
     
@@ -79,7 +125,8 @@ open class BHPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
     @IBInspectable
     open var isInfinite: Bool = false {
         didSet {
-                self.collectionView.reloadData()
+            self.collectionViewLayout.needsReprepare = true
+            self.collectionView.reloadData()
         }
     }
     
@@ -101,7 +148,8 @@ open class BHPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
     /// The transformer of the pager view.
     open var transformer: BHPagerViewTransformer? {
         didSet {
-            
+                self.transformer?.pagerView = self
+                self.collectionViewLayout.forceInvalidate()
         }
     }
     
@@ -113,7 +161,12 @@ open class BHPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
     }
 
     /// The percentage of x position at which the origin of the content view is offset from the origin of the pagerView view.
-  
+    open var scrollOffset: CGFloat {
+        let contentOffset = max(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y)
+        let scrollOffset = Double(contentOffset.divided(by: self.collectionViewLayout.itemSpacing))
+        return fmod(CGFloat(scrollOffset), CGFloat(Double(self.numberOfItems)))
+    }
+
 
     open fileprivate(set) dynamic var currentIndex: Int = 0
     
@@ -148,6 +201,7 @@ open class BHPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
         self.backgroundView?.frame = self.bounds
         self.contentView.frame = self.bounds
         self.collectionView.frame = self.contentView.bounds
+        
        
     }
     // MARK: - UICollectionViewDataSource
@@ -161,22 +215,42 @@ open class BHPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
             return 0;
         }
         self.numberOfSections = self.isInfinite ? Int(Int16.max)/self.numberOfItems : 1
-        
         return self.numberOfSections
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return self.numberOfItems
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let index = indexPath.item
-        print(index)
+        
         self.dequeingSection = indexPath.section
         let cell = self.dataSource!.pagerView(self, cellForItemAt: index)
         return cell
     }
+    
+    
+     // MARK: - UICollectionViewDelegate
+  
+
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if self.numberOfItems > 0 {
+            // In case someone is using KVO
+            let currentIndex = lround(Double(self.scrollOffset)) % self.numberOfItems
+            if (currentIndex != self.currentIndex) {
+                self.currentIndex = currentIndex
+            }
+        }
+        guard let function = self.delegate?.pagerViewDidScroll else {
+           return
+        }
+        function(self)
+    }
+    
+   
+
+    
     
     //MARK: Public functions
     /// Register a class for use in creating new pager view cells.
@@ -222,6 +296,20 @@ open class BHPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
         //self.collectionViewLayout.needsReprepare = true;
         self.collectionView.reloadData()
     }
+    
+    /// Selects the item at the specified index and optionally scrolls it into view.
+    ///
+    /// - Parameters:
+    ///   - index: The index path of the item to select.
+    ///   - animated: Specify true to animate the change in the selection or false to make the change without animating it.
+    @objc(selectItemAtIndex:animated:)
+    open func selectItem(at index: Int, animated: Bool) {
+        print("Select item \(index)")
+       
+    }
+
+    
+    
 
     
     
